@@ -4,6 +4,8 @@ use Exception;
 
 class OptionName
 {
+    const REVEAL_ROLES = 'reveal_roles';
+    
     const CHANGE_VOTE = 'changevote';
 
     const GAME_MODE = 'game_mode';
@@ -67,7 +69,7 @@ class Option
 
 class OptionsManager
 {
-    const optionsFileName = "options.json";
+    const optionsFileName = "/options.json";
     /** @var Option[] $options */
     public $options = [];
 
@@ -76,6 +78,8 @@ class OptionsManager
      */
     public function __construct()
     {
+        $this->options[OptionName::REVEAL_ROLES] = new Option(OptionName::REVEAL_ROLES, OptionType::Bool, false,
+            "When enabled roles will be revealed uppon death. meow");
         $this->options[OptionName::CHANGE_VOTE] = new Option(OptionName::CHANGE_VOTE, OptionType::Bool, "on",
             "When enabled votes can be changed until the final vote is cast.");
         $this->options[OptionName::NO_LYNCH] = new Option(OptionName::NO_LYNCH, OptionType::Bool, "on",
@@ -84,7 +88,7 @@ class OptionsManager
             "Use Beholder role in random games.");
         $this->options[OptionName::ROLE_BODYGUARD] = new Option(OptionName::ROLE_BODYGUARD, OptionType::Bool, "on",
             "Use Bodyguard role in random games.");
-        $this->options[OptionName::ROLE_HUNTER] = new Option(OptionName::ROLE_HUNTER, OptionType::Bool, "on",
+        $this->options[OptionName::ROLE_HUNTER] = new Option(OptionName::ROLE_HUNTER, OptionType::Bool, false,
             "Use Hunter role in random games.");
         $this->options[OptionName::ROLE_LYCAN] = new Option(OptionName::ROLE_LYCAN, OptionType::Bool, "on",
             "Use Lycan role in random games.");
@@ -92,7 +96,7 @@ class OptionsManager
             "Use Seer role in random games.");
         $this->options[OptionName::ROLE_TANNER] = new Option(OptionName::ROLE_TANNER, OptionType::Bool, "on",
             "Use Tanner role in random games.");
-        $this->options[OptionName::ROLE_WITCH] = new Option(OptionName::ROLE_WITCH, OptionType::Bool, "on",
+        $this->options[OptionName::ROLE_WITCH] = new Option(OptionName::ROLE_WITCH, OptionType::Bool, false,
             "Use Witch role in random games.");
         $this->options[OptionName::ROLE_WOLFMAN] = new Option(OptionName::ROLE_WOLFMAN, OptionType::Bool, "on",
             "Use Wolf Man role in random games.");
@@ -102,8 +106,8 @@ class OptionsManager
             "Use Cursed role in random games.");
         $this->options[OptionName::GAME_MODE] = new Option(OptionName::GAME_MODE, OptionType::String, "classic",
             "Choose game mode: classic, chaos, vanilla");
-        $this->options[OptionName::EBOLA] = new Option(OptionName::EBOLA, OptionType::Int, "10",
-            "Ebola will strike 1 in n times, where n is this number. 0 for off.");
+        $this->options[OptionName::EBOLA] = new Option(OptionName::EBOLA, OptionType::Int, "0",
+            "PLayers will accidently open the forbidden tuna 1 in n times, where n is this number. 0 for off.");
 
         $this->loadOptions();
     }
@@ -131,7 +135,7 @@ class OptionsManager
 
     public function saveOptions()
     {
-        file_put_contents(OptionsManager::optionsFileName, json_encode($this->options));
+        file_put_contents(sys_get_temp_dir() . OptionsManager::optionsFileName, json_encode($this->options));
     }
 
     /**

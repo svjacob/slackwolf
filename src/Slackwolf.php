@@ -107,9 +107,11 @@ class Slackwolf
          */
         echo "Connecting...\r\n";
         $client->connect()->then(function() {
-            echo "Connected.\n";
+            //echo "Connected.\n";
+            syslog(LOG_INFO, 'Connected.\n');
         }, function(ConnectionException $e) {
-            echo $e->getMessage();
+            //echo $e->getMessage();
+            syslog(LOG_ERROR, $e->getMessage());
             exit();
         });
 

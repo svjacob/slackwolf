@@ -280,7 +280,7 @@ class GameManager
         if (!$this->hasGame($id)) { return; }
         $users = $game->getLobbyPlayers();
         if(count($users) < 3) {
-            $this->sendMessageToChannel($game, "Cannot start a game with less than 3 players.");
+            $this->sendMessageToChannel($game, "Cannot start a game with fewer than 3 players.");
             return;
         }
 
@@ -425,7 +425,12 @@ class GameManager
             $lynchedNames = [];
             foreach ($players_to_be_lynched as $player_id) {
                 $player = $game->getPlayerById($player_id);
-                $lynchedNames[] = "@{$player->getUsername()} ({$player->role->getName()})";
+                if ($this->optionsManager->getOptionValue(OptionName::REVEAL_ROLES)) {
+                	$lynchedNames[] = "@{$player->getUsername()} ({$player->role->getName()})";
+            	} else {
+            		$lynchedNames[] = "@{$player->getUsername()}";
+            	}
+
                 $game->killPlayer($player_id);
 
                 if ($player->role->isRole(Role::HUNTER)) {
@@ -650,7 +655,7 @@ class GameManager
 		if($num == 1){
 			$livingPlayers = $game->getLivingPlayers();
 			$playerToKill = $livingPlayers[array_rand($livingPlayers)];
-			$this->sendMessageToChannel($game, ":goberserk: Ebola has struck! @{$playerToKill->getUsername()} ({$playerToKill->role->getName()}) is no longer with us.");
+			$this->sendMessageToChannel($game, ":goberserk: @{$playerToKill->getUsername()} ({$playerToKill->role->getName()}) opened the forbidden tuna and is no longer with us.");
 			$game->killPlayer($playerToKill->getId());
 			$numKilled++;
 		}
@@ -666,8 +671,11 @@ class GameManager
                 $hasHealed = true;
             }
             else {
+               	$killMsg .= " @{$player->getUsername()} ";
+            	if ($this->optionsManager->getOptionValue(OptionName::REVEAL_ROLES)) {
+            		$killMsg .= " ({$player->role->getName()})";
+            	}
 
-                $killMsg .= " @{$player->getUsername()} ({$player->role->getName()})";
 
                 if ($player->role->isRole(Role::HUNTER)) {
                     $hunterKilled = true;
