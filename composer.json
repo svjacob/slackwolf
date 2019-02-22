@@ -7,8 +7,13 @@
             "email": "chris@stitchlabs.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/thinkv/slack-client.git"
+        }],
     "require": {
-        "coderstephen/slack-client": "master",
+        "thinkv/slack-client": "master",
         "vlucas/phpdotenv": "^2.1"
     },
     "minimum-stability": "dev",
