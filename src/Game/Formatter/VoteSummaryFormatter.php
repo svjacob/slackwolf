@@ -47,12 +47,14 @@ class VoteSummaryFormatter
         foreach ($game->getLivingPlayers() as $player)
         {
             if ( ! $game->hasPlayerVoted($player->getId())) {
-                $playerNames[] = '<@'.$player->getDisplayName().'>';
+                $playerNames[] = '<@' . $player->getDisplayName() . '>';
             }
         }
 
         if (count($playerNames) > 0) {
             $msg .= implode(', ', $playerNames);
+            syslog(LOG_INFO, 'Play names: .\n');
+            syslog(LOG_INFO, $msg);
         } else {
             $msg .= "None";
         }
