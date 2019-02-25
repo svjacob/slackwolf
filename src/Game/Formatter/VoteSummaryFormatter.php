@@ -53,8 +53,8 @@ class VoteSummaryFormatter
 
         if (count($playerNames) > 0) {
             $msg .= implode(', ', $playerNames);
-            syslog(LOG_INFO, 'Play names: .\n');
-            syslog(LOG_INFO, $msg);
+            echo "Player names...\r\n";
+            echo $msg;
         } else {
             $msg .= "None";
         }
