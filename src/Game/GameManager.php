@@ -667,6 +667,9 @@ class GameManager
             if ($lynch_id == $game->getGuardedUserId()) {
                 $hasGuarded = true;
             }
+            elseif($player->role->isRole(Role::CURSED)) {
+                $player->role->kill();
+            }
             elseif($lynch_id == $game->getWitchHealedUserId()) {
                 $hasHealed = true;
             }
