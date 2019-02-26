@@ -80,7 +80,7 @@ class ShootCommand extends Command
         if ($this->args[0] == 'noone') {
             $this->game->setHunterNeedsToShoot(false);
             $this->gameManager->sendMessageToChannel($this->game,
-              ":bow_and_arrow: " . $player->getUsername() .
+              ":bow_and_arrow: " . $player->getDisplayName() .
                   " (Hunter) decided not to shoot anyone, and died.");
         }
         else {
@@ -100,8 +100,8 @@ class ShootCommand extends Command
           $this->game->setHunterNeedsToShoot(false);
 
           $this->gameManager->sendMessageToChannel($this->game,
-                ":bow_and_arrow: " . $player->getUsername() .
-                " (Hunter) shot dead " . $targeted_player->getUsername() .
+                ":bow_and_arrow: " . $player->getDisplayName() .
+                " (Hunter) shot dead " . $targeted_player->getDisplayName() .
                 " (" . $targeted_player->role->getName() . "), and then died.");
         }
 

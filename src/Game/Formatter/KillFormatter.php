@@ -24,14 +24,14 @@ class KillFormatter
 
             $numVoters = count($voters);
 
-            $msg .= ":knife: Kill @{$voteForPlayer->getUsername()}\t\t | ({$numVoters}) | ";
+            $msg .= ":knife: Kill @{$voteForPlayer->getDisplayName()}\t\t | ({$numVoters}) | ";
 
             $voterNames = [];
 
             foreach ($voters as $voter)
             {
                 $voter = $game->getPlayerById($voter);
-                $voterNames[] = '@'.$voter->getUsername();
+                $voterNames[] = '@'.$voter->getDisplayName();
             }
 
             $msg .= implode(', ', $voterNames) . "\r\n";
@@ -44,7 +44,7 @@ class KillFormatter
         foreach ($game->getWerewolves() as $player)
         {
             if ( ! $game->hasPlayerVoted($player->getId())) {
-                $playerNames[] = '@'.$player->getUsername();
+                $playerNames[] = '@'.$player->getDisplayName();
             }
         }
 

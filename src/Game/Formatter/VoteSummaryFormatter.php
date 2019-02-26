@@ -26,7 +26,7 @@ class VoteSummaryFormatter
             if ($voteForId == 'noone'){
                 $msg .= ":peace_symbol: No lynch\t\t | ({$numVoters}) | ";
             } else {
-                $msg .= ":coffin: Lynch @{$voteForPlayer->getUsername()}\t\t | ({$numVoters}) | ";
+                $msg .= ":coffin: Lynch @{$voteForPlayer->getDisplayName()}\t\t | ({$numVoters}) | ";
             }
 
             $voterNames = [];
@@ -34,7 +34,7 @@ class VoteSummaryFormatter
             foreach ($voters as $voter)
             {
                 $voter = $game->getPlayerById($voter);
-                $voterNames[] = '@'.$voter->getUsername();
+                $voterNames[] = '@'.$voter->getDisplayName();
             }
 
             $msg .= implode(', ', $voterNames) . "\r\n";
@@ -47,7 +47,7 @@ class VoteSummaryFormatter
         foreach ($game->getLivingPlayers() as $player)
         {
             if ( ! $game->hasPlayerVoted($player->getId())) {
-                $playerNames[] = '<@' . $player->getDisplayName() . '>';
+                $playerNames[] = '<@' . $player->getUsername() . '>';
             }
         }
 

@@ -19,7 +19,7 @@ class UserIdFormatter
         if (! isset($users[$rtn])) {
             //Not a valid userId, check it against usernames (not case sensitive!)
             foreach ($users as $key => $user) {
-                if (strcasecmp($user->getUsername(), $rtn) == 0) {
+                if (strcasecmp($user->getDisplayName(), $rtn) == 0) {
                     $rtn = $user->getId();
                     break;
                 }

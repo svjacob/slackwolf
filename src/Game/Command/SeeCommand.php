@@ -201,9 +201,9 @@ class SeeCommand extends Command
             }
 
             if ($appearsAsWerewolf) {
-                $msg = "@{$player->getUsername()} is on the side of the Werewolves.";
+                $msg = "@{$player->getDisplayName()} is on the side of the Werewolves.";
             } else {
-                $msg = "@{$player->getUsername()} is on the side of the Villagers.";
+                $msg = "@{$player->getDisplayName()} is on the side of the Villagers.";
             }
 
             $this->client->getDMById($this->channel)

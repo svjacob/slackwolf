@@ -336,7 +336,7 @@ class GameManager
                        } else {
                            $gameMsg .= "lobby was closed";
                        }
-                       $this->sendMessageToChannel($game, $gameMsg." by @{$user->getUsername()}.".$roleSummary);
+                       $this->sendMessageToChannel($game, $gameMsg." by @{$user->getDisplayName()}.".$roleSummary);
                    });
         }
 
@@ -426,16 +426,16 @@ class GameManager
             foreach ($players_to_be_lynched as $player_id) {
                 $player = $game->getPlayerById($player_id);
                 if ($this->optionsManager->getOptionValue(OptionName::REVEAL_ROLES)) {
-                	$lynchedNames[] = "@{$player->getUsername()} ({$player->role->getName()})";
+                	$lynchedNames[] = "@{$player->getDisplayName()} ({$player->role->getName()})";
             	} else {
-            		$lynchedNames[] = "@{$player->getUsername()}";
+            		$lynchedNames[] = "@{$player->getDisplayName()}";
             	}
 
                 $game->killPlayer($player_id);
 
                 if ($player->role->isRole(Role::HUNTER)) {
                     $game->setHunterNeedsToShoot(true);
-                    $hunterMsg .= ":bow_and_arrow: " . $player->getUsername() .
+                    $hunterMsg .= ":bow_and_arrow: " . $player->getDisplayName() .
                         " as hunter you may shoot one person.  Type !shoot @playername, or !shoot noone.";
                 }
 		else if($player->role->isRole(Role::TANNER)) {
@@ -655,7 +655,7 @@ class GameManager
 		if($num == 1){
 			$livingPlayers = $game->getLivingPlayers();
 			$playerToKill = $livingPlayers[array_rand($livingPlayers)];
-			$this->sendMessageToChannel($game, ":goberserk: @{$playerToKill->getUsername()} ({$playerToKill->role->getName()}) opened the forbidden tuna and is no longer with us.");
+			$this->sendMessageToChannel($game, ":goberserk: @{$playerToKill->getDisplayName()} ({$playerToKill->role->getName()}) opened the forbidden tuna and is no longer with us.");
 			$game->killPlayer($playerToKill->getId());
 			$numKilled++;
 		}
@@ -671,7 +671,7 @@ class GameManager
                 $hasHealed = true;
             }
             else {
-               	$killMsg .= " @{$player->getUsername()} ";
+               	$killMsg .= " @{$player->getDisplayName()} ";
             	if ($this->optionsManager->getOptionValue(OptionName::REVEAL_ROLES)) {
             		$killMsg .= " ({$player->role->getName()})";
             	}
@@ -679,7 +679,7 @@ class GameManager
 
                 if ($player->role->isRole(Role::HUNTER)) {
                     $hunterKilled = true;
-                    $hunterName = $player->getUsername();
+                    $hunterName = $player->getDisplayName();
                 }
 
                 $game->killPlayer($lynch_id);
@@ -693,14 +693,14 @@ class GameManager
 
             $poisoned_player_id = $game->getWitchPoisonedUserId();
             $poisoned_player = $game->getPlayerById($poisoned_player_id);
-            $poisoned_player_name = $poisoned_player->getUsername();
+            $poisoned_player_name = $poisoned_player->getDisplayName();
             $poisoned_player_role = (string) $poisoned_player->role->getName();
 
             if ($numKilled > 0) {
                 $killMsg .= " and";
             }
 
-            $killMsg .= " @{$poisoned_player->getUsername()} ($poisoned_player_role)";
+            $killMsg .= " @{$poisoned_player->getDisplayName()} ($poisoned_player_role)";
 
             $game->killPlayer($poisoned_player_id);
             $hasKilled = true;
