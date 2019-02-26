@@ -28,7 +28,12 @@ class Cursed extends Werewolf
      * {@inheritdoc}
      */
 	public function getName() {
-		return Role::CURSED;
+		if $this->isAlive {
+			return Role::CURSED;
+		} else {
+			return Role::CURSED." (Turned)";
+		}
+		
 	}
 
     /**
