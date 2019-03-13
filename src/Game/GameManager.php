@@ -669,6 +669,12 @@ class GameManager
             }
             elseif($player->role->isRole(Role::CURSED)) {
                 $player->role->kill();
+                $curseMsg = ":wolf: Your curse has been activated, you are now a part of the Werewolf team!";
+                $client = $this->client;
+                $this->client->getDMByUserId($player->getId())
+                 ->then(function (DirectMessageChannel $channel) use ($client,$curseMsg) {
+                     $client->send($curseMsg, $channel);
+                 });
             }
             elseif($lynch_id == $game->getWitchHealedUserId()) {
                 $hasHealed = true;
