@@ -565,8 +565,9 @@ class GameManager
         $this->sendMessageToChannel($game, $nightMsg);
 
         $wolves = $game->getWerewolves();
+        $wolves_list = PlayerListFormatter::format($wolves);
 
-        $wolfMsg = ":moon: It is night and it is time to hunt. Type !kill #channel @player to make your choice. ";
+        $wolfMsg = ":moon: It is night and it is time to hunt. Type !kill #channel @player to make your choice. \r\nCurrent Werewolf team: {$wolves_list}";
 
         foreach ($wolves as $wolf)
         {
