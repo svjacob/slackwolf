@@ -46,6 +46,12 @@ class GameManager
     public $optionsManager;
 
     /**
+     * Unix timetamp of previously started game, for enforcing 1 game a week
+     * @var string
+     */
+    public $previousGameStartTime;
+
+    /**
      * Defines the GameManager constructor.
      *
      * @param RealTimeClient $client
@@ -283,6 +289,12 @@ class GameManager
             $this->sendMessageToChannel($game, "Cannot start a game with fewer than 3 players.");
             return;
         }
+        if((time() - $this->previousGameStartTime) < 604800){
+            $this->sendMessageToChannel($game, "Cannot start a game within 7 days of a previous game.");
+            return;
+        }
+
+        $this->previousGameStartTime = time();
 
         $game->setWitchHealedUserId(null);
         $game->setWitchPoisonedUserId(null);
