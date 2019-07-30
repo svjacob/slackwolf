@@ -49,7 +49,7 @@ class GameManager
      * Unix timetamp of previously started game, for enforcing 1 game a week
      * @var string
      */
-    public $previousGameStartTime;
+    public $previousGameStartTime = 0;
 
     /**
      * Defines the GameManager constructor.
